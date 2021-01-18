@@ -42,6 +42,7 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 		log.Fatalf("%s: Couldn't inject headers (%v)", r.URL.Path, err)
 	}
 	if _, err = http.DefaultClient.Do(syncReq); err != nil {
+		sp.LogEventWithPayload("GET service error", err) // Log the error
 		log.Printf("%s: Synchronous call failed (%v)", r.URL.Path, err)
 		return
 	}
