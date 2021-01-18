@@ -28,6 +28,7 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 	go func() {
 		sleepMilli(50)
 		if _, err := http.DefaultClient.Do(asyncReq); err != nil {
+			sp.LogEvent(fmt.Sprintf("GET /async error: %v", err))
 			log.Printf("%s: Async call failed (%v)", r.URL.Path, err)
 		}
 	}()
